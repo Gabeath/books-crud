@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "lib": ["es6"],
+    "module": "commonjs",
+    "rootDir": "src",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "outDir": "build",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "useUnknownInCatchVariables": false,
+    "baseUrl": "src",
+    "paths": {
+      "@app/*": [
+        "./app/src/*"
+      ],
+      "@mechanisms/*": [
+        "./core/mechanisms/*"
+      ],
+      "@middlewares/*": [
+        "./core/middlewares/*"
+      ],
+      "@models/*": [
+        "./core/models/*"
+      ],
+      "@repositories/*": [
+        "./core/repositories/*"
+      ],
+      "@utilities/*": [
+        "./core/utilities/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+  ],
+  "exclude": [
+    "node_modules",
+    "./babel.config.js"
+  ]
+}
