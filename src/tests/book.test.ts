@@ -88,8 +88,16 @@ describe('Book creation tests', () => {
 describe('Books list paginated', () => {
   it('should return a books list paginated', async () => {
     const response = await request(server)
-      .get('/api/book');
+      .get('/api/book?skip=0&take=10');
 
     expect(response.status).toBe(200);
+  });
+
+  it('should return count and results fields', async () => {
+    const response = await request(server)
+      .get('/api/book');
+
+    expect(response.body).toHaveProperty('count');
+    expect(response.body).toHaveProperty('fields');
   });
 });

@@ -30,4 +30,18 @@ export default class BookService {
       inventory: book.inventory,
     } as Book);
   }
+
+  static async getWithPagination({ skip, take }: { skip: number, take: number }) {
+    const count = await BookRepository.count({});
+    const results = await BookRepository.selectAll({
+      select: {
+        id: true,
+        name: true,
+      },
+      skip,
+      take,
+    });
+
+    return { count, results };
+  }
 }
