@@ -84,3 +84,12 @@ describe('Book creation tests', () => {
     expect(response.status).toBe(400);
   });
 });
+
+describe('Books list paginated', () => {
+  it('should return a books list paginated', async () => {
+    const response = await request(server)
+      .get('/api/book');
+
+    expect(response.status).toBe(200);
+  });
+});
