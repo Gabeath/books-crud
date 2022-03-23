@@ -98,12 +98,19 @@ describe('Books list paginated', () => {
       .get('/api/book?skip=0&take=10');
 
     expect(response.body).toHaveProperty('count');
-    expect(response.body).toHaveProperty('fields');
+    expect(response.body).toHaveProperty('results');
   });
 
   it('should not return a books list paginated if send invalid params', async () => {
     const response = await request(server)
       .get('/api/book?skip=a&take=b');
+
+    expect(response.status).toBe(400);
+  });
+
+  it('should not return a books list paginated if skip params be less than zero', async () => {
+    const response = await request(server)
+      .get('/api/book?skip=-1');
 
     expect(response.status).toBe(400);
   });
