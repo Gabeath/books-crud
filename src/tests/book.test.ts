@@ -67,4 +67,20 @@ describe('Book creation tests', () => {
 
     expect(response.status).toBe(400);
   });
+
+  it('should not create a new book when inventory is less than zero', async () => {
+    const bookToCreate = {
+      name: faker.lorem.words(3),
+      author: faker.name.findName(),
+      description: faker.lorem.sentence(),
+      inventory: -1,
+      sbn: faker.datatype.number({ min: 1000000000000, max: 9999999999999 }).toString(),
+    } as Book;
+
+    const response = await request(server)
+      .post('/api/book')
+      .send(bookToCreate);
+
+    expect(response.status).toBe(400);
+  });
 });
