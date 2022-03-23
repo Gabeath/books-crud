@@ -95,9 +95,16 @@ describe('Books list paginated', () => {
 
   it('should return count and results fields', async () => {
     const response = await request(server)
-      .get('/api/book');
+      .get('/api/book?skip=0&take=10');
 
     expect(response.body).toHaveProperty('count');
     expect(response.body).toHaveProperty('fields');
+  });
+
+  it('should not return a books list paginated if send invalid params', async () => {
+    const response = await request(server)
+      .get('/api/book?skip=a&take=b');
+
+    expect(response.status).toBe(400);
   });
 });
