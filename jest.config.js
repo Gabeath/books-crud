@@ -1,5 +1,4 @@
 module.exports = {
-  bail: true,
   clearMocks: true,
   moduleNameMapper: {
     '@app(.*)': '<rootDir>/src/app/src/$1',
