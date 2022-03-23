@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "configurations": [
+    {
+      "name": "API APP",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "ts-node/register/transpile-only"
+      ],
+      "args": [
+        "src/app/index.ts"
+      ],
+      "skipFiles": [
+        "<node_internals>/**",
+        "node_modules/**"
+      ],
+    },
+  ]
+}

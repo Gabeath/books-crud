@@ -17,3 +17,7 @@ export default class BusinessError extends CustomError {
 export const ValidationCodeError = {
   INVALID_PARAMS: 'invalid_params',
 };
+
+export const BookCodeError = {
+  SBN_ALREADY_REGISTERED: 'sbn_already_registered',
+};

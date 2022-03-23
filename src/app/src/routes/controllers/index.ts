@@ -9,6 +9,6 @@ router.get('/status', (req, res) => res.json({
   uptime: startedAt.fromNow(),
 }));
 
-// router.use('/book', require('./book').default);
+router.use('/book', require('./book').default);
 
 export default router;
