@@ -32,6 +32,7 @@ export const createBook: Schema = {
   inventory: {
     in: 'body',
     isInt: true,
+    toInt: true,
     errorMessage: 'invalid_inventory',
   },
 };
