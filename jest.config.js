@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   bail: true,
   clearMocks: true,
   moduleNameMapper: {
