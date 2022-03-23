@@ -1,6 +1,5 @@
 import { Schema } from 'express-validator';
 
-// eslint-disable-next-line import/prefer-default-export
 export const createBook: Schema = {
   sbn: {
     in: 'body',
@@ -34,5 +33,20 @@ export const createBook: Schema = {
     isInt: true,
     toInt: true,
     errorMessage: 'invalid_inventory',
+  },
+};
+
+export const getBooksPaginated: Schema = {
+  skip: {
+    in: 'query',
+    isInt: true,
+    optional: true,
+    errorMessage: 'invalid_skip',
+  },
+  take: {
+    in: 'query',
+    isInt: true,
+    optional: true,
+    errorMessage: 'invalid_take',
   },
 };

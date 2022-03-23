@@ -32,6 +32,12 @@ export default class BookService {
   }
 
   static async getWithPagination({ skip, take }: { skip: number, take: number }) {
+    if (skip < 0) {
+      throw new BusinessError(ValidationCodeError.INVALID_PARAMS, {
+        message: 'skip_cannot_be_less_than_zero',
+      });
+    }
+
     const count = await BookRepository.count({});
     const results = await BookRepository.selectAll({
       select: {
