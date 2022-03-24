@@ -97,4 +97,16 @@ export default class BookService {
       inventory: book.inventory,
     } as Book);
   }
+
+  static async deleteById(id: string) {
+    const book = await BookRepository.selectOne({
+      where: { id },
+    });
+
+    if (!book) {
+      throw new BusinessError(BookCodeError.BOOK_NOT_FOUND);
+    }
+
+    await BookRepository.deleteById(book.id);
+  }
 }

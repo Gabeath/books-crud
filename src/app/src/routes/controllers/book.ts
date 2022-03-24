@@ -5,6 +5,7 @@ import { checkSchema, validationResult } from 'express-validator';
 import BookService from '@app/services/book';
 import {
   createBook,
+  deleteBook,
   getBookDetails,
   getBooksPaginated,
   updateBook,
@@ -85,6 +86,26 @@ routes.put(
     try {
       validationResult(req).throw();
       response = await BookService.updateById(req.params.id, req.body);
+    } catch (err) {
+      const errCatch = err?.errors?.length
+        ? new BusinessError(ValidationCodeError.INVALID_PARAMS, {
+          message: err.errors.shift().msg,
+        }) : err;
+
+      return errorHandler(errCatch, req, res);
+    }
+    return res.status(httpStatus.OK).json(response);
+  },
+);
+
+routes.delete(
+  '/:id',
+  checkSchema(deleteBook),
+  async (req: Request, res: Response) => {
+    let response;
+    try {
+      validationResult(req).throw();
+      response = await BookService.deleteById(req.params.id);
     } catch (err) {
       const errCatch = err?.errors?.length
         ? new BusinessError(ValidationCodeError.INVALID_PARAMS, {

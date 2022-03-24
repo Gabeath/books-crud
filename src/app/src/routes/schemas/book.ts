@@ -91,3 +91,11 @@ export const updateBook: Schema = {
     errorMessage: 'invalid_inventory',
   },
 };
+
+export const deleteBook: Schema = {
+  id: {
+    in: 'params',
+    isUUID: true,
+    errorMessage: 'invalid_id',
+  },
+};
