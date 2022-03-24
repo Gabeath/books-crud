@@ -312,3 +312,57 @@ describe('Book update', () => {
     });
   });
 });
+
+describe('Book deletion', () => {
+  it('should delete the book', async () => {
+    const bookToCreate = {
+      name: faker.lorem.words(3),
+      author: faker.name.findName(),
+      description: faker.lorem.sentence(),
+      inventory: faker.datatype.number(100),
+      sbn: faker.datatype.number({ min: 1000000000000, max: 9999999999999 }).toString(),
+    } as Book;
+
+    const bookCreated = await prisma.book.create({
+      data: bookToCreate,
+    });
+
+    const response = await request(server)
+      .delete(`/api/book/${bookCreated.id}`);
+
+    expect(response.status).toBe(200);
+  });
+
+  it('should return nothing when delete the book', async () => {
+    const bookToCreate = {
+      name: faker.lorem.words(3),
+      author: faker.name.findName(),
+      description: faker.lorem.sentence(),
+      inventory: faker.datatype.number(100),
+      sbn: faker.datatype.number({ min: 1000000000000, max: 9999999999999 }).toString(),
+    } as Book;
+
+    const bookCreated = await prisma.book.create({
+      data: bookToCreate,
+    });
+
+    const response = await request(server)
+      .delete(`/api/book/${bookCreated.id}`);
+
+    expect(response.body).toBeNull();
+  });
+
+  it('should not delete the book with invalid id', async () => {
+    const response = await request(server)
+      .delete('/api/book/123');
+
+    expect(response.status).toBe(400);
+  });
+
+  it('should not delete the book with not found id', async () => {
+    const response = await request(server)
+      .delete('/api/book/0a133a67-78d0-410e-a3b8-ed33cc88066b');
+
+    expect(response.status).toBe(400);
+  });
+});
