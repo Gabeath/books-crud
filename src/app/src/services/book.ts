@@ -38,8 +38,20 @@ export default class BookService {
       });
     }
 
-    const count = await BookRepository.count({});
+    const count = await BookRepository.count({
+      where: {
+        inventory: {
+          gt: 0,
+        },
+      },
+    });
+
     const results = await BookRepository.selectAll({
+      where: {
+        inventory: {
+          gt: 0,
+        },
+      },
       select: {
         id: true,
         name: true,

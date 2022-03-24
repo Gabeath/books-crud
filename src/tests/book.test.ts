@@ -115,3 +115,63 @@ describe('Books list paginated', () => {
     expect(response.status).toBe(400);
   });
 });
+
+describe('Book details', () => {
+  it('should return the book details', async () => {
+    const bookToCreate = {
+      name: faker.lorem.words(3),
+      author: faker.name.findName(),
+      description: faker.lorem.sentence(),
+      inventory: faker.datatype.number(100),
+      sbn: faker.datatype.number({ min: 1000000000000, max: 9999999999999 }).toString(),
+    } as Book;
+
+    const bookCreated = await prisma.book.create({
+      data: bookToCreate,
+    });
+
+    const response = await request(server)
+      .get(`/api/book/${bookCreated.id}`);
+
+    expect(response.status).toBe(200);
+
+    await prisma.book.delete({
+      where: { id: bookCreated.id },
+    });
+  });
+
+  it('should return the book details with a book object', async () => {
+    const bookToCreate = {
+      name: faker.lorem.words(3),
+      author: faker.name.findName(),
+      description: faker.lorem.sentence(),
+      inventory: faker.datatype.number(100),
+      sbn: faker.datatype.number({ min: 1000000000000, max: 9999999999999 }).toString(),
+    } as Book;
+
+    const bookCreated = await prisma.book.create({
+      data: bookToCreate,
+    });
+
+    const response = await request(server)
+      .get(`/api/book/${bookCreated.id}`);
+
+    expect(response.body).toHaveProperty('id');
+    expect(response.body).toHaveProperty('name');
+    expect(response.body).toHaveProperty('author');
+    expect(response.body).toHaveProperty('description');
+    expect(response.body).toHaveProperty('inventory');
+    expect(response.body).toHaveProperty('sbn');
+
+    await prisma.book.delete({
+      where: { id: bookCreated.id },
+    });
+  });
+
+  it('should not return the book details with invalid id', async () => {
+    const response = await request(server)
+      .get('/api/book/123');
+
+    expect(response.status).toBe(400);
+  });
+});
