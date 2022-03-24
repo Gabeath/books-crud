@@ -50,3 +50,11 @@ export const getBooksPaginated: Schema = {
     errorMessage: 'invalid_take',
   },
 };
+
+export const getBookDetails: Schema = {
+  id: {
+    in: 'params',
+    isUUID: true,
+    errorMessage: 'invalid_id',
+  },
+};

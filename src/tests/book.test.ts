@@ -174,4 +174,11 @@ describe('Book details', () => {
 
     expect(response.status).toBe(400);
   });
+
+  it('should not return the book details with not found id', async () => {
+    const response = await request(server)
+      .get('/api/book/0a133a67-78d0-410e-a3b8-ed33cc88066b');
+
+    expect(response.status).toBe(400);
+  });
 });

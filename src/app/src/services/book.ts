@@ -62,4 +62,16 @@ export default class BookService {
 
     return { count, results };
   }
+
+  static async getDetailsById(id: string) {
+    const book = await BookRepository.selectOne({
+      where: { id },
+    });
+
+    if (!book) {
+      throw new BusinessError(BookCodeError.BOOK_NOT_FOUND);
+    }
+
+    return book;
+  }
 }

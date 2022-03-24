@@ -19,5 +19,6 @@ export const ValidationCodeError = {
 };
 
 export const BookCodeError = {
+  BOOK_NOT_FOUND: 'book_not_found',
   SBN_ALREADY_REGISTERED: 'sbn_already_registered',
 };
