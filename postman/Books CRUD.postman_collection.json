@@ -1,0 +1,196 @@
+{
+	"info": {
+		"_postman_id": "66f14c62-5b0b-4e39-9d12-bcc1f409f206",
+		"name": "Books CRUD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Book",
+			"item": [
+				{
+					"name": "Create Book",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function gera_random(n)\r",
+									"{\r",
+									" var ranNum = Math.round(Math.random()*n);\r",
+									" return ranNum;\r",
+									"}\r",
+									"\r",
+									"\r",
+									"function mod(dividendo,divisor)\r",
+									"{\r",
+									" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+									"}\r",
+									"\r",
+									"function sbn()\r",
+									"{\r",
+									"    var n = 9;\r",
+									"    var n1 = gera_random(n);\r",
+									"    var n2 = gera_random(n);\r",
+									"    var n3 = gera_random(n);\r",
+									"    var n4 = gera_random(n);\r",
+									"    var n5 = gera_random(n);\r",
+									"    var n6 = gera_random(n);\r",
+									"    var n7 = gera_random(n);\r",
+									"    var n8 = gera_random(n);\r",
+									"    var n9 = gera_random(n);\r",
+									"    var n10 = gera_random(n);\r",
+									"    var n11 = gera_random(n);\r",
+									"    var n12 = gera_random(n);\r",
+									"    var n13 = gera_random(n);\r",
+									"    \r",
+									"    return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+n13;\r",
+									"}\r",
+									"\r",
+									"postman.setEnvironmentVariable(\"sbn\", sbn());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{$randomLoremWords}}\",\r\n    \"author\": \"{{$randomFullName}}\",\r\n    \"description\": \"{{$randomLoremSentence}}\",\r\n    \"inventory\": {{$randomInt}},\r\n    \"sbn\": \"{{sbn}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/book",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Books Paginated",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/book?skip=0&take=10",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"book"
+							],
+							"query": [
+								{
+									"key": "skip",
+									"value": "0"
+								},
+								{
+									"key": "take",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Book Details By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/book/:id",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"book",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "0a133a67-78d0-410e-a3b8-ed33cc88066a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Book By Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"dolore nobis non\",\r\n    \"description\": \"Accusamus nobis ut eum dolor quis.\",\r\n    \"author\": \"Bryan Bauch\",\r\n    \"inventory\": 777\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/book/:id",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"book",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "0a133a67-78d0-410e-a3b8-ed33cc88066a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Book By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/book/:id",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"book",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{$guid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
