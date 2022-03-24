@@ -3,7 +3,12 @@ import httpStatus from 'http-status';
 import { checkSchema, validationResult } from 'express-validator';
 
 import BookService from '@app/services/book';
-import { createBook, getBookDetails, getBooksPaginated } from '@app/routes/schemas/book';
+import {
+  createBook,
+  getBookDetails,
+  getBooksPaginated,
+  updateBook,
+} from '@app/routes/schemas/book';
 
 import errorHandler from '@middlewares/error-handler';
 
@@ -60,6 +65,26 @@ routes.get(
     try {
       validationResult(req).throw();
       response = await BookService.getWithPagination({ ...controllerPaginationHelper(req) });
+    } catch (err) {
+      const errCatch = err?.errors?.length
+        ? new BusinessError(ValidationCodeError.INVALID_PARAMS, {
+          message: err.errors.shift().msg,
+        }) : err;
+
+      return errorHandler(errCatch, req, res);
+    }
+    return res.status(httpStatus.OK).json(response);
+  },
+);
+
+routes.put(
+  '/:id',
+  checkSchema(updateBook),
+  async (req: Request, res: Response) => {
+    let response;
+    try {
+      validationResult(req).throw();
+      response = await BookService.updateById(req.params.id, req.body);
     } catch (err) {
       const errCatch = err?.errors?.length
         ? new BusinessError(ValidationCodeError.INVALID_PARAMS, {

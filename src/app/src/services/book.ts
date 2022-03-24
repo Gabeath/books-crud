@@ -74,4 +74,27 @@ export default class BookService {
 
     return book;
   }
+
+  static async updateById(id: string, book: Book) {
+    const bookToUpdate = await BookRepository.selectOne({
+      where: { id },
+    });
+
+    if (!bookToUpdate) {
+      throw new BusinessError(BookCodeError.BOOK_NOT_FOUND);
+    }
+
+    if (book.inventory < 0) {
+      throw new BusinessError(ValidationCodeError.INVALID_PARAMS, {
+        message: 'book_inventory_cannot_be_less_than_zero',
+      });
+    }
+
+    return BookRepository.updateById(bookToUpdate.id, {
+      name: book.name,
+      author: book.author,
+      description: book.description,
+      inventory: book.inventory,
+    } as Book);
+  }
 }

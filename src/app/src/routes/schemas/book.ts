@@ -58,3 +58,36 @@ export const getBookDetails: Schema = {
     errorMessage: 'invalid_id',
   },
 };
+
+export const updateBook: Schema = {
+  id: {
+    in: 'params',
+    isUUID: true,
+    errorMessage: 'invalid_id',
+  },
+  name: {
+    in: 'body',
+    isString: true,
+    optional: true,
+    errorMessage: 'invalid_name',
+  },
+  description: {
+    in: 'body',
+    isString: true,
+    optional: true,
+    errorMessage: 'invalid_description',
+  },
+  author: {
+    in: 'body',
+    isString: true,
+    optional: true,
+    errorMessage: 'invalid_author',
+  },
+  inventory: {
+    in: 'body',
+    isInt: true,
+    toInt: true,
+    optional: true,
+    errorMessage: 'invalid_inventory',
+  },
+};
